@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0ee9ac26-fb5d-4872-839f-5d33ccb2474b}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>resources\busbus\IP-KOM-ÖP-Busscript.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -31,6 +31,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="resources\alexa-response\alexa_invisible.png" />
+    <Content Include="resources\alexa-response\alexa_listening.zip" />
+    <Content Include="resources\alexa-response\alexa_silent.png" />
+    <Content Include="resources\alexa-response\alexa_silent.zip" />
+    <Content Include="resources\alexa-response\alexa_talking.zip" />
+    <Content Include="resources\alexa-response\ausgabe.txt" />
+    <Content Include="resources\alexa-response\hoerenAn.sh" />
+    <Content Include="resources\alexa-response\hoerenAus.sh" />
+    <Content Include="resources\alexa-response\redenAn.sh" />
+    <Content Include="resources\alexa-response\redenAus.sh" />
     <Content Include="resources\diablo_icons\barbarian-bg.png" />
     <Content Include="resources\diablo_icons\barbarian.png" />
     <Content Include="resources\diablo_icons\crusader-bg.png" />
@@ -271,6 +281,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\" />
+    <Folder Include="resources\alexa-response\" />
     <Folder Include="resources\busbus\" />
     <Folder Include="resources\diablo_icons" />
     <Folder Include="resources\font" />

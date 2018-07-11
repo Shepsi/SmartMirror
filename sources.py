@@ -198,6 +198,38 @@ def getHeroStats(battleTag, charId):
 	
 	return d
 
+###################
+# Alexa on Mirror #
+###################
+def fadeAlexaOut(original, *args):
+	size = original.alexa_Response.size
+	opacity = original.alexa_Response.opacity
+	if size[0] >= 0 and size[1] >= 0:
+		original.alexa_Response.size = size[0] - 4 , size[1] - 4
+		original.alexa_Response.opacity = opacity - 0.04
+	else:
+		original.alexa_Response.source = "resources/alexa-response/alexa_invisible.png"
+		return False
+
+
+def fadeAlexaIn(original, *args):
+	size = original.alexa_Response.size
+	opacity = original.alexa_Response.opacity
+	if size[0] <= 300 and size[1] <= 300:
+		original.alexa_Response.size = size[0] + 8 , size[1] + 8
+		original.alexa_Response.opacity = opacity + 0.1
+	else:
+		return False
+
+x = 0
+def Increment(y):
+	global x
+	if y == 0:
+		x = 0
+	else:
+		x = x + 1
+	return x
+
 ##################
 # Fußball Finale #
 ##################

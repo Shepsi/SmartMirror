@@ -30,7 +30,9 @@
 	f_halb1: f_halb1
 	f_halb2: f_halb2
 	f_finale: f_finale
-	
+
+	alexa_Response: alexa_Response
+
 	# Diablo
 	#characterName: characterNameId
 	#quotation: quotationId
@@ -201,6 +203,18 @@
 			max_lines: 5
 			text: 'zeile 1\nzeile 2\nzeile 3\nzeile 4\nzeile 5'
 			opacity: 0
+
+  #Alexa Response
+	RelativeLayout:
+		size_hint: None, None
+		height: root.height
+		width: root.width
+		Image:											# Alexa_response
+			id: alexa_Response
+			anim_delay: 0.08
+			pos: root.width/2 - self.width/2, root.height/2 - self.height/2 + 100
+			size_hint: None, None
+			size: dp(300), dp(300)
 
 	#Fußball
 	AnchorLayout:

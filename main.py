@@ -12,6 +12,7 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 
 from sources import *
 from weathersources import *
+from functools import partial
 import random
 import time
 import datetime
@@ -71,6 +72,9 @@ class Werte(Screen):
 	# Weather condition
 	weatherparticles = []
 	weathercondition = ""
+
+	#Alexa_Response
+	alexa_Response = ObjectProperty()
 
 	# Fussball
 	f_achtel1 = ObjectProperty()
@@ -228,6 +232,26 @@ class Werte(Screen):
 				tmpDict[k].source = 'resources/diablo_icons/{0}-bg.png'.format(k)
 			tmpDict[k].reload()
 
+	# Alexa on mirror
+	def getAlexa(self, *args):
+		alexaresponse = getContent("resources/alexa-response/ausgabe.txt").replace('\r','').replace('\n','')
+		if alexaresponse == "hoerenAn":
+			size = self.alexa_Response.size
+			#if size[0] < 300 and size[1] < 300:
+			Clock.schedule_interval(partial(fadeAlexaIn, self), 0.016)
+			
+			Increment(0)
+			self.alexa_Response.source = "resources/alexa-response/alexa_listening.zip"
+		elif alexaresponse == "redenAn":
+			Increment(0)
+			self.alexa_Response.source = "resources/alexa-response/alexa_talking.zip"
+		elif alexaresponse == "redenAus" or alexaresponse == "hoerenAus":
+			if Increment(1) <= 25 and Increment(1) <= 35:
+				self.alexa_Response.source = "resources/alexa-response/alexa_silent.zip"
+			else:
+				Clock.schedule_interval(partial(fadeAlexaOut, self), 0.016)
+
+
 	def setFussball(self, *args):
 		today = datetime.datetime.now()
 		fillAchtelfinale(self)
@@ -264,6 +288,8 @@ class SmartMirrorApp(App):
 		childWidgets.setDaysToHolidays()
 		print('Packt den Pinsel aus.')
 		childWidgets.setIconColor()
+		print('Alexa wird aufgeweckt')
+		childWidgets.getAlexa()
 		print("Ball wird angerollt.")
 		childWidgets.setFussball()
 		#Needs PIL to be installed
@@ -280,6 +306,7 @@ class SmartMirrorApp(App):
 		#Clock.schedule_interval(childWidgets.setDiablo, 600)
 		Clock.schedule_interval(childWidgets.letItWeather, 0.016)
 		Clock.schedule_interval(childWidgets.setFussball, 60)
+		Clock.schedule_interval(childWidgets.getAlexa, 0.5)
 		return parent
 
 if __name__ == '__main__':

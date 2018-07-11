@@ -1,0 +1,13 @@
+{
+  "User": {
+    "Id": 5,
+    "Username": "schwaiger",
+    "Name": "Sonja Schwaiger",
+    "Email": "schwaiger@uni-trier.de",
+    "AvatarUrl": "http://verserv53.uni-trier.de/uploads/-/system/user/avatar/5/avatar.png",
+    "PrivateToken": "39c780b9790696d192215faa93d97c9f0a048660fc839dba58a81b39790c2934",
+    "Host": "http://verserv53.uni-trier.de/",
+    "TwoFactorEnabled": false,
+    "ApiVersion": 3
+  }
+}
