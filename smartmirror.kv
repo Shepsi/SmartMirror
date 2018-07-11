@@ -1,0 +1,542 @@
+<MirrorRoot>:
+
+<Werte>:
+	# Sichtbarer Bereich: 165, 30, 155, 30
+	
+	weatherIcon: weatherIconId
+	weatherTemperature: weatherTemperatureId
+	weatherCondition: weatherConditionId
+	sensorTemperature: sensorTemperatureId
+	
+	currentTime: currentTimeId
+	currentDay: currentDayId
+	currentMonth: currentMonthId
+	
+	daysToHolidays: daysToHolidaysId
+	
+	# Fussball
+	f_achtel1: f_achtel1
+	f_achtel2: f_achtel2
+	f_achtel3: f_achtel3
+	f_achtel4: f_achtel4
+	f_achtel5: f_achtel5
+	f_achtel6: f_achtel6
+	f_achtel7: f_achtel7
+	f_achtel8: f_achtel8
+	f_viertel1: f_viertel1
+	f_viertel2: f_viertel2
+	f_viertel3: f_viertel3
+	f_viertel4: f_viertel4
+	f_halb1: f_halb1
+	f_halb2: f_halb2
+	f_finale: f_finale
+	
+	# Diablo
+	#characterName: characterNameId
+	#quotation: quotationId
+	#seasonalIcon: seasonalIconId
+	#hardcoreIcon: hardcoreIconId
+	#damageIcon: damageIconId
+	#toughnessIcon: toughnessIconId
+	#healingIcon: healingIconId
+	#damage: damageId
+	#toughness: toughnessId
+	#healing: healingId
+	#levelIcon: levelIconId
+	#levelText: levelTextId
+	#totalKillsText: totalKillsTextId
+	#playtimeBarbarian: playtimeBarbarianId
+	#playtimeCrusader: playtimeCrusaderId
+	#playtimeDemonHunter: playtimeDemonHunterId
+	#playtimeMonk: playtimeMonkId
+	#playtimeNecromancer: playtimeNecromancerId
+	#playtimeWitchDoctor: playtimeWitchDoctorId
+	#playtimeWizard: playtimeWizardId
+	
+	#:set padL 180
+	#:set padR 170
+	#:set padLR 350
+	#:set padT 45
+	#:set padB 45
+	#:set padTB 90
+	#:set fn "resources/font/Letters for Learners.ttf"
+	
+	# top left
+	RelativeLayout:
+		id: topLeftCorner
+		pos: padL, root.height - padT - self.height
+		size_hint: None, None
+		height: (root.height - padTB - bottomCenter.height)/2
+		width: (root.width - padLR)/2
+		Button:
+			pos: 0, 0
+			size: topLeftCorner.size
+			background_color: .2, .5, .6, 1
+			opacity: 0
+		# Wetter-Icon
+		Image:
+			id: weatherIconId
+			pos: 0, topLeftCorner.height - self.height
+			size_hint: None, None
+			size: dp(100), dp(100)
+			color: .1, .6, 1, 1
+			source: "resources/weather_icons/n/000.png"
+		# Temperatur (draußen)
+		Label:
+			id: weatherTemperatureId
+			pos: weatherIconId.width + 5, weatherIconId.top - self.height
+			size_hint: None, None
+			height: weatherIconId.height * .6
+			width: self.texture_size[0]
+			text_size: None, None
+			halign: 'left'
+			valign: 'bottom'
+			font_size: 55
+			font_name: fn
+			text: '?'
+		# Temperatur (drinnen)
+		Label:
+			id: sensorTemperatureId
+			pos: weatherTemperatureId.right, weatherTemperatureId.y
+			size_hint: None, None
+			height: weatherTemperatureId.height
+			width: (root.width - padLR)/2 - weatherTemperatureId.width - weatherIconId.width
+			text_size: self.size
+			halign: 'left'
+			valign: 'bottom'
+			font_size: 55
+			font_name: fn
+			text: ' / ?'
+		# Wetterbedingung
+		Label:
+			id: weatherConditionId
+			pos: weatherTemperatureId.x, weatherTemperatureId.y - self.height + 12
+			size_hint: None, None
+			height: weatherIconId.height * .4
+			width: (root.width - padLR)/2 - weatherIconId.width
+			text_size: self.size
+			halign: 'left'
+			valign: 'top'
+			font_size: 40
+			font_name: fn
+			text: '???'
+	
+	# top right
+	RelativeLayout:
+		id: topRightCorner
+		pos: root.width - padR - self.width, root.height - padT - self.height
+		size_hint: None, None
+		height: (root.height - padTB - bottomCenter.height)/2
+		width: (root.width - padLR)/2
+		Button:
+			pos: 0, 0
+			size: topRightCorner.size
+			background_color: .5, .2, .6, 1
+			opacity: 0
+		# Uhrzeit
+		Label:
+			id: currentTimeId
+			pos: topRightCorner.width - self.width, topRightCorner.height - self.height
+			size_hint: None, None
+			height: weatherIconId.height
+			width: self.texture_size[0]
+			text_size: None, None
+			halign: 'left'
+			valign: 'middle'
+			font_size: 80
+			font_name: fn
+			text: '??:??'
+		# Monat
+		Label:
+			id: currentMonthId
+			pos: currentTimeId.x - self.width - 10, currentTimeId.top - self.height
+			size_hint: None, None
+			height: currentTimeId.height /2
+			width: (root.width - padLR)/2 - currentTimeId.width
+			text_size: self.size
+			halign: 'right'
+			valign: 'bottom'
+			font_size: 40
+			font_name: fn
+			text: '???'
+		# Tag
+		Label:
+			id: currentDayId
+			pos: currentMonthId.x, currentTimeId.y + 14
+			size_hint: None, None
+			height: currentMonthId.height
+			width: currentMonthId.width
+			text_size: self.size
+			halign: 'right'
+			valign: 'top'
+			font_size: 55
+			font_name: fn
+			text: '?'
+			
+	# bottom right
+	RelativeLayout:
+		id: bottomRightCorner
+		pos: root.width - padR - self.width, bottomCenter.top
+		size_hint: None, None
+		height: (root.height - padTB - bottomCenter.height)/2
+		width: (root.width - padLR)/2
+		opacity: 1
+		Button:
+			pos: 0, 0
+			size: bottomRightCorner.size
+			background_color: .8, .5, .6, 1
+			opacity: 0
+		# Events
+		Label:
+			id: nextEventsId
+			pos: 0, 0
+			size_hint: None, None
+			height: (root.height - padTB)/2
+			width: (root.width - padLR)/2
+			text_size: self.size
+			halign: 'right'
+			valign: 'bottom'
+			font_size: 40
+			font_name: fn
+			max_lines: 5
+			text: 'zeile 1\nzeile 2\nzeile 3\nzeile 4\nzeile 5'
+			opacity: 0
+
+	#Fußball
+	AnchorLayout:
+		anchor_x: "center"
+		anchor_y: "bottom"
+		padding: 200, 0, 200, 0
+		BoxLayout:
+			orientation: 'horizontal'
+			padding: 20
+			spacing: 5
+			Label:
+				id: f_finale
+				halign: 'center'
+				size_hint: .1, .7
+				font_name: fn
+				font_size: 20
+		BoxLayout:
+			orientation: 'horizontal'
+			padding: 20
+			spacing: 5
+			Label:
+				id: f_halb1
+				halign: 'center'
+				size_hint: .1, .6
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_halb2
+				halign: 'center'
+				size_hint: .1, .6
+				font_name: fn
+				font_size: 20
+		BoxLayout:
+			orientation: 'horizontal'
+			padding: 20
+			spacing: 5
+			Label:
+				id: f_viertel1
+				halign: 'center'
+				size_hint: .1, .4
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_viertel2
+				halign: 'center'
+				size_hint: .1, .4
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_viertel3
+				halign: 'center'
+				size_hint: .1, .4
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_viertel4
+				halign: 'center'
+				size_hint: .1, .4
+				font_name: fn
+				font_size: 20
+		BoxLayout:
+			orientation: 'horizontal'
+			Label:
+				id: f_achtel1
+				halign: 'center'
+				size_hint: .1, .2
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_achtel2
+				halign: 'center'
+				size_hint: .1, .2
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_achtel3
+				halign: 'center'
+				size_hint: .1, .2
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_achtel4
+				halign: 'center'
+				size_hint: .1, .2
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_achtel5
+				halign: 'center'
+				size_hint: .1, .2
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_achtel6
+				halign: 'center'
+				size_hint: .1, .2
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_achtel7
+				halign: 'center'
+				size_hint: .1, .2
+				font_name: fn
+				font_size: 20
+			Label:
+				id: f_achtel8
+				halign: 'center'
+				size_hint: .1, .2
+				font_name: fn
+				font_size: 20
+	# bottom left
+	#RelativeLayout:
+	#	id: bottomLeftCornerDiablo
+	#	pos: padL, bottomCenter.top
+	#	size_hint: None, None
+	#	opacity: 1
+	#	height: (root.height - padTB - bottomCenter.height)/2
+	#	width: (root.width - padLR)/2
+	#	Button:
+	#		pos: 0, 0
+	#		size: bottomLeftCornerDiablo.size
+	#		background_color: .1, .8, .2, 1
+	#		opacity: 0
+	#	# Seasonal-Icon
+	#	Image:
+	#		id: seasonalIconId
+	#		pos: 0, characterNameId.center_y - self.height/2
+	#		size_hint: None, None
+	#		size: dp(38), dp(38)
+	#		source: "resources/diablo_icons/seasonal.png"
+	#		opacity: 0
+	#	# Name
+	#	Label:
+	#		id: characterNameId
+	#		pos: (playtimeBarbarianId.x + playtimeWizardId.right)/2 - self.width/2, damageIconId.top
+	#		size_hint: None, None
+	#		height: self.texture_size[1]
+	#		width: playtimeWizardId.right - playtimeBarbarianId.x
+	#		text_size: self.width, None
+	#		halign: 'center'
+	#		valign: 'middle'
+	#		font_size: 40
+	#		font_name: fn
+	#		text: ''
+	#		markup: True
+	#	# Hardcore-Icon
+	#	Image:
+	#		id: hardcoreIconId
+	#		pos: levelIconId.x, characterNameId.center_y - self.height/2
+	#		size_hint: None, None
+	#		size: dp(38), dp(38)
+	#		source: "resources/diablo_icons/hardcore.png"
+	#		opacity: 0
+	#	# Damage/Toughness/Healing
+	#	Image:
+	#		id: damageIconId
+	#		pos: quotationId.x, quotationId.top
+	#		size_hint: None, None
+	#		size: dp(28), dp(28)
+	#		source: "resources/diablo_icons/damage.png"
+	#		opacity: 1
+	#	Label:
+	#		id: damageId
+	#		pos: damageIconId.right, quotationId.top
+	#		size_hint: None, None
+	#		height: damageIconId.height
+	#		width: (quotationId.width/3)-damageIconId.width
+	#		text_size: self.size
+	#		halign: 'center'
+	#		valign: 'middle'
+	#		font_size: 20
+	#		font_name: fn
+	#		text: '768,5 Tsd.'
+	#	Image:
+	#		id: toughnessIconId
+	#		pos: damageId.right, quotationId.top
+	#		size_hint: None, None
+	#		size: dp(28), dp(28)
+	#		source: "resources/diablo_icons/toughness.png"
+	#		opacity: 1
+	#	Label:
+	#		id: toughnessId
+	#		pos: toughnessIconId.right, quotationId.top
+	#		size_hint: None, None
+	#		height: toughnessIconId.height
+	#		width: (quotationId.width/3)-toughnessIconId.width
+	#		text_size: self.size
+	#		halign: 'center'
+	#		valign: 'middle'
+	#		font_size: 20
+	#		font_name: fn
+	#		text: '1,4 Mio.'
+	#	Image:
+	#		id: healingIconId
+	#		pos: toughnessId.right, quotationId.top
+	#		size_hint: None, None
+	#		size: dp(28), dp(28)
+	#		source: "resources/diablo_icons/healing.png"
+	#		opacity: 1
+	#	Label:
+	#		id: healingId
+	#		pos: healingIconId.right, quotationId.top
+	#		size_hint: None, None
+	#		height: healingIconId.height
+	#		width: (quotationId.width/3)-healingIconId.width
+	#		text_size: self.size
+	#		halign: 'center'
+	#		valign: 'middle'
+	#		font_size: 20
+	#		font_name: fn
+	#		text: '618,7 Tsd.'
+	#	# Quotation
+	#	Label:
+	#		id: quotationId
+	#		pos: 0, totalKillsTextId.top
+	#		size_hint: None, None
+	#		height: self.texture_size[1]
+	#		width: levelIconId.right
+	#		text_size: self.width, None
+	#		halign: 'justify'
+	#		valign: 'middle'
+	#		font_size: 20
+	#		font_name: fn
+	#		text: ''
+	#	# Global monster statistics
+	#	Image:
+	#		id: totalKillsIconId
+	#		pos: 0, totalKillsTextId.center_y - self.height/2
+	#		size_hint: None, None
+	#		size: dp(38), dp(38)
+	#		source: "resources/diablo_icons/monsters.png"
+	#	Label:
+	#		id: totalKillsTextId
+	#		pos: totalKillsIconId.right, playtimeBarbarianId.top
+	#		size_hint: None, None
+	#		height: dp(38)
+	#		width: (playtimeWizardId.right - playtimeBarbarianId.x)/2
+	#		text_size: self.size
+	#		halign: 'left'
+	#		valign: 'middle'
+	#		font_size: 28
+	#		font_name: fn
+	#		text: ''
+	#	# Level
+	#	Image:
+	#		id: levelIconId
+	#		pos: playtimeWizardId.right, totalKillsTextId.center_y - self.height/2
+	#		size_hint: None, None
+	#		size: dp(38), dp(38)
+	#		source: "resources/diablo_icons/paragon.png"
+	#	Label:
+	#		id: levelTextId
+	#		pos: levelIconId.x - self.width, totalKillsTextId.y
+	#		size_hint: None, None
+	#		height: dp(38)
+	#		width: (playtimeWizardId.right - playtimeBarbarianId.x)/2
+	#		text_size: self.size
+	#		halign: 'right'
+	#		valign: 'middle'
+	#		font_size: 28
+	#		font_name: fn
+	#		color: .51, .514, .761, 1
+	#		text: '610'
+	#	# character playtime icons
+	#	Image:
+	#		id: playtimeBarbarianId
+	#		pos: seasonalIconId.right, 0
+	#		size_hint: None, None
+	#		size: dp(35), dp(73)
+	#		source: "resources/diablo_icons/barbarian-bg.png"
+	#		opacity: 1
+	#	Image:
+	#		id: playtimeCrusaderId
+	#		pos: playtimeBarbarianId.right + 8, 0
+	#		size_hint: None, None
+	#		size: dp(35), dp(73)
+	#		source: "resources/diablo_icons/crusader-bg.png"
+	#		opacity: 1
+	#	Image:
+	#		id: playtimeDemonHunterId
+	#		pos: playtimeCrusaderId.right + 8, 0
+	#		size_hint: None, None
+	#		size: dp(35), dp(73)
+	#		source: "resources/diablo_icons/demon-hunter-bg.png"
+	#		opacity: 1
+	#	Image:
+	#		id: playtimeMonkId
+	#		pos: playtimeDemonHunterId.right + 8, 0
+	#		size_hint: None, None
+	#		size: dp(35), dp(73)
+	#		source: "resources/diablo_icons/monk-bg.png"
+	#		opacity: 1
+	#	Image:
+	#		id: playtimeNecromancerId
+	#		pos: playtimeMonkId.right + 8, 0
+	#		size_hint: None, None
+	#		size: dp(35), dp(73)
+	#		source: "resources/diablo_icons/necromancer-bg.png"
+	#		opacity: 1
+	#	Image:
+	#		id: playtimeWitchDoctorId
+	#		pos: playtimeNecromancerId.right + 8, 0
+	#		size_hint: None, None
+	#		size: dp(35), dp(73)
+	#		source: "resources/diablo_icons/witch-doctor-bg.png"
+	#		opacity: 1
+	#	Image:
+	#		id: playtimeWizardId
+	#		pos: playtimeWitchDoctorId.right + 8, 0
+	#		size_hint: None, None
+	#		size: dp(35), dp(73)
+	#		source: "resources/diablo_icons/wizard-bg.png"
+	#		opacity: 1
+			
+	# bottom center
+	RelativeLayout:
+		id: bottomCenter
+		pos: padL, padB
+		size_hint: None, None
+		height: 50
+		width: root.width - padLR
+		Button:
+			pos: 0, 0
+			size: bottomCenter.size
+			background_color: .9, .2, .2, 1
+			opacity: 0
+		# Name
+		# Tage bis Halloween/Weihnachten
+		Label:
+			id: daysToHolidaysId
+			pos: 0, 0
+			size_hint: None, None
+			size: bottomCenter.size
+			text_size: self.size
+			halign: 'center'
+			valign: 'middle'
+			font_size: 40
+			font_name: fn
+			text: ''
