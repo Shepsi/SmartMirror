@@ -76,23 +76,6 @@ class Werte(Screen):
 	#Alexa_Response
 	alexa_Response = ObjectProperty()
 
-	# Fussball
-	f_achtel1 = ObjectProperty()
-	f_achtel2 = ObjectProperty()
-	f_achtel3 = ObjectProperty()
-	f_achtel4 = ObjectProperty()
-	f_achtel5 = ObjectProperty()
-	f_achtel6 = ObjectProperty()
-	f_achtel7 = ObjectProperty()
-	f_achtel8 = ObjectProperty()
-	f_viertel1 = ObjectProperty()
-	f_viertel2 = ObjectProperty()
-	f_viertel3 = ObjectProperty()
-	f_viertel4 = ObjectProperty()
-	f_halb1 = ObjectProperty()
-	f_halb2 = ObjectProperty()
-	f_finale = ObjectProperty()
-
 	def setCurrentTime(self, *args):
 		self.currentTime.text = getTime()
 
@@ -251,20 +234,6 @@ class Werte(Screen):
 			else:
 				Clock.schedule_interval(partial(fadeAlexaOut, self), 0.016)
 
-
-	def setFussball(self, *args):
-		today = datetime.datetime.now()
-		fillAchtelfinale(self)
-
-		#showViertelOn = datetime.datetime(2018,7,5)
-		#if (today >= showViertelOn):
-		fillViertelfinale(self)
-
-		#showHalbOn = datetime.datetime(2018,7,9)
-		#if (today >= showHalbOn):
-		fillHalbfinale(self)
-		fillfinale(self)
-
 class SmartMirrorApp(App):
 	def build(self):
 		print('Programm startete am {0} um {1} Uhr.'.format(time.strftime('%d.%m.%Y'), time.strftime('%H:%M')))
@@ -290,8 +259,6 @@ class SmartMirrorApp(App):
 		childWidgets.setIconColor()
 		print('Alexa wird aufgeweckt')
 		childWidgets.getAlexa()
-		print("Ball wird angerollt.")
-		childWidgets.setFussball()
 		#Needs PIL to be installed
 		#print('Wandert nach Sanktuario.')
 		#childWidgets.setDiablo()
@@ -305,7 +272,6 @@ class SmartMirrorApp(App):
 		Clock.schedule_interval(childWidgets.setDaysToHolidays, 60)
 		#Clock.schedule_interval(childWidgets.setDiablo, 600)
 		Clock.schedule_interval(childWidgets.letItWeather, 0.016)
-		Clock.schedule_interval(childWidgets.setFussball, 60)
 		Clock.schedule_interval(childWidgets.getAlexa, 0.5)
 		return parent
 
