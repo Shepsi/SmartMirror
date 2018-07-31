@@ -68,6 +68,18 @@ class Werte(Screen):
 	#playtimeNecromancer = ObjectProperty()
 	#playtimeWitchDoctor = ObjectProperty()
 	#playtimeWizard = ObjectProperty()
+	
+	# WoW Top 3
+	wowStatThirdIcon = ObjectProperty()
+	wowStatThirdName = ObjectProperty()
+	wowStatThirdValue = ObjectProperty()
+	wowStatSecondIcon = ObjectProperty()
+	wowStatSecondName = ObjectProperty()
+	wowStatSecondValue = ObjectProperty()
+	wowStatFirstIcon = ObjectProperty()
+	wowStatFirstName = ObjectProperty()
+	wowStatFirstValue = ObjectProperty()
+	wowStatName = ObjectProperty()
 
 	# Weather condition
 	weatherparticles = []
@@ -233,6 +245,31 @@ class Werte(Screen):
 				self.alexa_Response.source = "resources/alexa-response/alexa_silent.zip"
 			else:
 				Clock.schedule_interval(partial(fadeAlexaOut, self), 0.016)
+				
+	# WoW Top 3
+	def setWoWTop3(self, *args):
+		stats = getTop3WoW()
+		# set header
+		self.wowStatName.text = stats.get('stat', '?')
+		
+		first = stats.get('characters', [{},{},{}])[0]
+		second = stats.get('characters', [{},{},{}])[1]
+		third = stats.get('characters', [{},{},{}])[2]
+		
+		# set icons
+		self.wowStatThirdIcon.source = 'resources/wow_stats/icons/{}.png'.format(third.get('class', 'default'))
+		self.wowStatSecondIcon.source = 'resources/wow_stats/icons/{}.png'.format(second.get('class', 'default')) 
+		self.wowStatFirstIcon.source = 'resources/wow_stats/icons/{}.png'.format(first.get('class', 'default'))
+		
+		# set names
+		self.wowStatThirdName.text = third.get('formatedName', '?')
+		self.wowStatSecondName.text = second.get('formatedName', '?')
+		self.wowStatFirstName.text = first.get('formatedName', '?')
+		
+		# set values
+		self.wowStatThirdValue.text = utils.readableNumber(third.get('value', 0))
+		self.wowStatSecondValue.text = utils.readableNumber(second.get('value', 0))
+		self.wowStatFirstValue.text = utils.readableNumber(first.get('value', 0))
 
 class SmartMirrorApp(App):
 	def build(self):
@@ -262,7 +299,10 @@ class SmartMirrorApp(App):
 		#Needs PIL to be installed
 		#print('Wandert nach Sanktuario.')
 		#childWidgets.setDiablo()
-
+		print('Streift durch Azeroth')
+		childWidgets.setWoWTop3()
+		
+		
 		#Updaten der einzelnen widgets in s
 		Clock.schedule_interval(childWidgets.setCurrentTime, 10)
 		Clock.schedule_interval(childWidgets.setCurrentDate, 10)

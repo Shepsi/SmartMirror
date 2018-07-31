@@ -13,11 +13,18 @@ import re
 
 # own stuff
 import utils
+import wow_de
 from config import APIKEY_OPENWEATHERMAP
 from config import APIKEY_BATTLE_NET
 from config import CITYCODE
 from config import COLOR_NIGHT
 from config import COLOR_NOON
+from config import WOW_CHARACTERS
+from globals import STATS
+from globals import RACES
+from globals import CLASSES
+from globals import CLASS_COLORS
+from globals import CLASS_COLORS_HEX
 
 
 #########################################
@@ -269,3 +276,50 @@ def getContent(path):
 	text = content.read()
 	content.close()
 	return text
+	
+# Generates a top 3 list of WoW characters for a random stat
+def getTop3WoW():
+	# list of valid keys for tracked stats
+	keys = ['health', 'str', 'agi', 'int', 'sta', 'critRating', 'hasteRating', 'masteryRating', 'versatility', 'armor', 'alteracValleyTowersCaptured', 'alteracValleyTowersDefended', 'eyeOfTheStormFlagsCaptured', 'warsongGulchFlagsCaptured', 'warsongGulchFlagsDefended', 'battlegroundsPlayed', 'battlegroundsWon', 'duelsWon', 'duelsLost', 'honorableKills', 'honorableKillsAlteracValley', 'honorableKillsArathiBasin', 'honorableKillsWarsongGulch', 'honorableKillsWorld', 'drowning', 'dungeon', 'heroicDungeon', 'raid', 'falling', 'fireAndLava', 'otherPlayers', 'total', 'damageDone', 'damageReceived', 'healingDone', 'healingReceived', 'kills', 'killsCritters', 'flightPathsTaken', 'hearthstoneUsed', 'portalsTaken', 'summonsAccepted', 'cheer', 'hug', 'lol', 'ohgod', 'wave', 'completed', 'aborted', 'dailyCompleted', 'averagePerDay', 'cooking', 'cookingRecipes', 'fishing', 'fishCaught', 'bandages', 'beverages', 'food', 'differentBeverages', 'differentFoods', 'elixirs', 'flasks', 'healingPotions', 'manaPotions', 'healthstones', 'epicsLooted', 'rollsGreed', 'rollsNeed', 'exaltedFactions', 'petBattlesWon']
+
+	randomKey = random.choice(keys)
+
+	# generate list of tuples and sort them by value
+	characterStats = []
+	for server, chars in WOW_CHARACTERS.items():
+		for char in WOW_CHARACTERS.get(server,[]):
+			characterStats.append((server,
+									char,
+									wow_de.getCharacterInfo(server, char)['individualStats'][randomKey],
+									wow_de.getCharacterInfo(server, char)['title'],
+									wow_de.getCharacterInfo(server, char)['race'],
+									wow_de.getCharacterInfo(server, char)['class']
+								))
+	characterStats = sorted(characterStats, key=lambda tup:tup[2], reverse=True)
+
+	# generate dict
+	output = {
+		'stat': STATS[randomKey],
+		'characters': []
+	}
+
+	for e in characterStats:
+		# format the name and title
+		formatedName = '[size=32pt][color={0}]{1}[/color][/size]'.format(CLASS_COLORS_HEX[e[5]],e[1])
+		# only if title is selected
+		if e[3] is not None:
+			# Name Title
+			if e[3][0:3] == '%s,':
+				formatedName = e[3].replace('%s, ', formatedName + '\n')
+			elif e[3][0:2] == '%s':
+				formatedName = e[3].replace('%s ', formatedName + '\n')
+			# Title Name
+			if e[3][-4:] == ', %s':
+				formatedName = e[3].replace(' , %s', '\n' + formatedName)
+			elif e[3][-2:] == '%s':
+				formatedName = e[3].replace(' %s', '\n' + formatedName)
+		elif e[3] is not None:
+			formatedName = e[3].replace(',%s', formatedName + '\n')
+		output['characters'].append({'name': e[1], 'server': e[0], 'value': e[2], 'title': e[3], 'race': RACES[e[4]], 'class': CLASSES[e[5]], 'color': CLASS_COLORS[e[5]], 'formatedName': formatedName})
+
+	return output
