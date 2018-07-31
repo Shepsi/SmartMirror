@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # API keys 
 APIKEY_OPENWEATHERMAP = '49552dd2b7439e74118ea5693b8c6483'
 APIKEY_BATTLE_NET = 'tyu4z8taz27exjymehfcqpr6s9qwccvh'

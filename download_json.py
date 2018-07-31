@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from config import APIKEY_BATTLE_NET
 from config import WOW_CHARACTERS
 

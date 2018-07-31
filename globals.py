@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # class colors of corresponding class by id (as defined by Blizzard)
 CLASS_COLORS = {
 	1:  (199,156,110,255), # Warrior
