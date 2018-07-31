@@ -40,31 +40,39 @@ BATTLETAGS = [
 	'koralina-2116'
 ]
 
-# number of Pokemon (for pokeAPI)
-MAX_POKEMON = 802
-
 # WoW guilds and characters
 WOW_CHARACTERS = {
-	'Zuluhed': {
-		'guild': 'Trebetas Lakaien',
-		'characters': [
+	'Zuluhed': [
 			'Iskalla',
 			'Hestah',
 			'Kristah',
-			'Wastoh',
+			'Plunders',
 			'Rose',
+			'Coconut',
+			'Shipina',
+			'Moobo',
 			'Tauhtau',
-			'Coconut'
-		]
-	},
-	'Dun Morogh': {
-		'guild': 'Trebetas Allianz',
-		'characters': [
+			'Manalysis',
+			'Paulek',
+			'Verdul',
+			'Jitka',
+			'Gelus',
+			'Chibipa'
+	],
+	'Dun Morogh': [
 			'Marmorkuchen',
 			'Ntochi',
-			'Mightysonja',
+			'Weltschmerz',
+			'Iskalla',
+			'Zwoelf',
+			'Zorn',
 			'Yrelliah',
-			'Mei'
-		]
-	}
+			'Mei',
+			'Mightysonja',
+			'Jadehexe',
+			'Atlanti',
+			'Poker',
+			'Shivers',
+			'Bazilla'
+	]
 }

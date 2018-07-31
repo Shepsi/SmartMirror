@@ -178,4 +178,11 @@ def maskImage(bg, fg, pct):
 	imgBg = Image.alpha_composite(imgBg.convert('RGBA'), imgFg)
 	
 	imgBg.save('tmp/'+f, 'png')
-	
+
+# returns the time in seconds since the files last update
+# returns None when the file doesn't exist
+def checkCreationDate(filename):
+	lastUpdate = None
+	if os.path.isfile(filename):
+		lastUpdate = round(time.time() - os.path.getmtime(filename))
+	return lastUpdate

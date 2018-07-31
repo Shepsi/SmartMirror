@@ -68,6 +68,18 @@ class Werte(Screen):
 	#playtimeNecromancer = ObjectProperty()
 	#playtimeWitchDoctor = ObjectProperty()
 	#playtimeWizard = ObjectProperty()
+	
+	# WoW Top 3
+	wowStatThirdIcon = ObjectProperty()
+	wowStatThirdName = ObjectProperty()
+	wowStatThirdValue = ObjectProperty()
+	wowStatSecondIcon = ObjectProperty()
+	wowStatSecondName = ObjectProperty()
+	wowStatSecondValue = ObjectProperty()
+	wowStatFirstIcon = ObjectProperty()
+	wowStatFirstName = ObjectProperty()
+	wowStatFirstValue = ObjectProperty()
+	wowStatName = ObjectProperty()
 
 	# Weather condition
 	weatherparticles = []
@@ -75,23 +87,6 @@ class Werte(Screen):
 
 	#Alexa_Response
 	alexa_Response = ObjectProperty()
-
-	# Fussball
-	f_achtel1 = ObjectProperty()
-	f_achtel2 = ObjectProperty()
-	f_achtel3 = ObjectProperty()
-	f_achtel4 = ObjectProperty()
-	f_achtel5 = ObjectProperty()
-	f_achtel6 = ObjectProperty()
-	f_achtel7 = ObjectProperty()
-	f_achtel8 = ObjectProperty()
-	f_viertel1 = ObjectProperty()
-	f_viertel2 = ObjectProperty()
-	f_viertel3 = ObjectProperty()
-	f_viertel4 = ObjectProperty()
-	f_halb1 = ObjectProperty()
-	f_halb2 = ObjectProperty()
-	f_finale = ObjectProperty()
 
 	def setCurrentTime(self, *args):
 		self.currentTime.text = getTime()
@@ -250,20 +245,31 @@ class Werte(Screen):
 				self.alexa_Response.source = "resources/alexa-response/alexa_silent.zip"
 			else:
 				Clock.schedule_interval(partial(fadeAlexaOut, self), 0.016)
-
-
-	def setFussball(self, *args):
-		today = datetime.datetime.now()
-		fillAchtelfinale(self)
-
-		#showViertelOn = datetime.datetime(2018,7,5)
-		#if (today >= showViertelOn):
-		fillViertelfinale(self)
-
-		#showHalbOn = datetime.datetime(2018,7,9)
-		#if (today >= showHalbOn):
-		fillHalbfinale(self)
-		fillfinale(self)
+				
+	# WoW Top 3
+	def setWoWTop3(self, *args):
+		stats = getTop3WoW()
+		# set header
+		self.wowStatName.text = stats.get('stat', '?')
+		
+		first = stats.get('characters', [{},{},{}])[0]
+		second = stats.get('characters', [{},{},{}])[1]
+		third = stats.get('characters', [{},{},{}])[2]
+		
+		# set icons
+		self.wowStatThirdIcon.source = 'resources/wow_stats/icons/{}.png'.format(third.get('class', 'default'))
+		self.wowStatSecondIcon.source = 'resources/wow_stats/icons/{}.png'.format(second.get('class', 'default')) 
+		self.wowStatFirstIcon.source = 'resources/wow_stats/icons/{}.png'.format(first.get('class', 'default'))
+		
+		# set names
+		self.wowStatThirdName.text = third.get('formatedName', '?')
+		self.wowStatSecondName.text = second.get('formatedName', '?')
+		self.wowStatFirstName.text = first.get('formatedName', '?')
+		
+		# set values
+		self.wowStatThirdValue.text = utils.readableNumber(third.get('value', 0))
+		self.wowStatSecondValue.text = utils.readableNumber(second.get('value', 0))
+		self.wowStatFirstValue.text = utils.readableNumber(first.get('value', 0))
 
 class SmartMirrorApp(App):
 	def build(self):
@@ -290,12 +296,13 @@ class SmartMirrorApp(App):
 		childWidgets.setIconColor()
 		print('Alexa wird aufgeweckt')
 		childWidgets.getAlexa()
-		print("Ball wird angerollt.")
-		childWidgets.setFussball()
 		#Needs PIL to be installed
 		#print('Wandert nach Sanktuario.')
 		#childWidgets.setDiablo()
-
+		print('Streift durch Azeroth')
+		childWidgets.setWoWTop3()
+		
+		
 		#Updaten der einzelnen widgets in s
 		Clock.schedule_interval(childWidgets.setCurrentTime, 10)
 		Clock.schedule_interval(childWidgets.setCurrentDate, 10)
@@ -305,7 +312,6 @@ class SmartMirrorApp(App):
 		Clock.schedule_interval(childWidgets.setDaysToHolidays, 60)
 		#Clock.schedule_interval(childWidgets.setDiablo, 600)
 		Clock.schedule_interval(childWidgets.letItWeather, 0.016)
-		Clock.schedule_interval(childWidgets.setFussball, 60)
 		Clock.schedule_interval(childWidgets.getAlexa, 0.5)
 		return parent
 
