@@ -288,12 +288,13 @@ def getTop3WoW():
 	characterStats = []
 	for server, chars in WOW_CHARACTERS.items():
 		for char in WOW_CHARACTERS.get(server,[]):
+			tmpCharacterInfo = wow_de.getCharacterInfo(server, char)
 			characterStats.append((server,
 									char,
-									wow_de.getCharacterInfo(server, char)['individualStats'][randomKey],
-									wow_de.getCharacterInfo(server, char)['title'],
-									wow_de.getCharacterInfo(server, char)['race'],
-									wow_de.getCharacterInfo(server, char)['class']
+									tmpCharacterInfo['individualStats'][randomKey],
+									tmpCharacterInfo['title'],
+									tmpCharacterInfo['race'],
+									tmpCharacterInfo['class']
 								))
 	characterStats = sorted(characterStats, key=lambda tup:tup[2], reverse=True)
 
@@ -305,7 +306,7 @@ def getTop3WoW():
 
 	for e in characterStats:
 		# format the name and title
-		formatedName = '[size=32pt][color={0}]{1}[/color][/size]'.format(CLASS_COLORS_HEX[e[5]],e[1])
+		formatedName = '[size=26pt][color={0}]{1}[/color][/size]'.format(CLASS_COLORS_HEX[e[5]],e[1])
 		# only if title is selected
 		if e[3] is not None:
 			# Name Title

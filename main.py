@@ -257,9 +257,9 @@ class Werte(Screen):
 		third = stats.get('characters', [{},{},{}])[2]
 		
 		# set icons
-		self.wowStatThirdIcon.source = 'resources/wow_stats/icons/{}.png'.format(third.get('class', 'default'))
-		self.wowStatSecondIcon.source = 'resources/wow_stats/icons/{}.png'.format(second.get('class', 'default')) 
-		self.wowStatFirstIcon.source = 'resources/wow_stats/icons/{}.png'.format(first.get('class', 'default'))
+		# self.wowStatThirdIcon.source = 'resources/wow_stats/icons/{}.png'.format(third.get('class', 'default'))
+		# self.wowStatSecondIcon.source = 'resources/wow_stats/icons/{}.png'.format(second.get('class', 'default')) 
+		# self.wowStatFirstIcon.source = 'resources/wow_stats/icons/{}.png'.format(first.get('class', 'default'))
 		
 		# set names
 		self.wowStatThirdName.text = third.get('formatedName', '?')
@@ -282,25 +282,60 @@ class SmartMirrorApp(App):
 		parent.add_widget(childWidgets)
 
 		#Lädt einzelne Widgets
-		print('Schaut auf die Uhr.')
+		startTime = time.time()
+		print('Schaut auf die Uhr.', end='')
 		childWidgets.setCurrentTime()
-		print('Schaut auf den Kalender.')
+		endTime = time.time()
+		print(' ({:.2f}s)'.format(endTime - startTime))
+		
+		startTime = time.time()
+		print('Schaut auf den Kalender.', end='')
 		childWidgets.setCurrentDate()
-		print('Fühlt, wie warm es hier ist')
+		endTime = time.time()
+		print(' ({:.2f}s)'.format(endTime - startTime))
+		
+		startTime = time.time()
+		print('Fühlt, wie warm es hier ist', end='')
 		childWidgets.setRaspiTemperature()
-		print('Guckt für dich raus nach dem Wetter.')
+		endTime = time.time()
+		print(' ({:.2f}s)'.format(endTime - startTime))
+		
+		startTime = time.time()
+		print('Guckt für dich raus nach dem Wetter.', end='')
 		childWidgets.setWeather()
-		print('Ist schon Halloween? Ist schon Weihnachten!?')
+		endTime = time.time()
+		print(' ({:.2f}s)'.format(endTime - startTime))
+		
+		startTime = time.time()
+		print('Ist schon Halloween? Ist schon Weihnachten!?', end='')
 		childWidgets.setDaysToHolidays()
-		print('Packt den Pinsel aus.')
+		endTime = time.time()
+		print(' ({:.2f}s)'.format(endTime - startTime))
+		
+		startTime = time.time()
+		print('Packt den Pinsel aus.', end='')
 		childWidgets.setIconColor()
-		print('Alexa wird aufgeweckt')
+		endTime = time.time()
+		print(' ({:.2f}s)'.format(endTime - startTime))
+		
+		startTime = time.time()
+		print('Alexa wird aufgeweckt', end='')
 		childWidgets.getAlexa()
-		#Needs PIL to be installed
-		#print('Wandert nach Sanktuario.')
-		#childWidgets.setDiablo()
-		print('Streift durch Azeroth')
+		endTime = time.time()
+		print(' ({:.2f}s)'.format(endTime - startTime))
+		
+		# Needs PIL to be installed
+		# startTime = time.time()
+		# print('Wandert nach Sanktuario.', end='')
+		# childWidgets.setDiablo()
+		# endTime = time.time()
+		# print(' ({:.2f}s)'.format(endTime - startTime))
+		
+		startTime = time.time()
+		print('Streift durch Azeroth', end='')
 		childWidgets.setWoWTop3()
+		endTime = time.time()
+		print(' ({:.2f}s)'.format(endTime - startTime))
 		
 		
 		#Updaten der einzelnen widgets in s
@@ -313,6 +348,7 @@ class SmartMirrorApp(App):
 		#Clock.schedule_interval(childWidgets.setDiablo, 600)
 		Clock.schedule_interval(childWidgets.letItWeather, 0.016)
 		Clock.schedule_interval(childWidgets.getAlexa, 0.5)
+		Clock.schedule_interval(childWidgets.setWoWTop3, 600)
 		return parent
 
 if __name__ == '__main__':
