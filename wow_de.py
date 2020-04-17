@@ -111,10 +111,8 @@ def getCharacterInfo(server, character):
 	try:
 		with open('cache/raw_json/{}-{}.json'.format(server, character), 'r') as f:
 			j = json.load(f)
-	except FileNotFoundError:
+	except IOError:
 		print('"cache/raw_json/{}-{}.json" not found!'.format(server, character))
-	except PermissionError:
-		print('No permission to open "cache/raw_json/{}-{}.json"!'.format(server, character))
 		
 	# fill first-level entries
 	for k in {'name', 'class', 'race', 'gender', 'level', 'thumbnail'}:
